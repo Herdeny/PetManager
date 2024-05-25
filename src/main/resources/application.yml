@@ -1,7 +1,11 @@
 spring:
   datasource:
     driver-class-name:  com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pet_manager
+    url: jdbc:mysql://localhost:3306/pet_manager?useSSL=false
     username: root
-    password: 1234
+    password: xinghun1314
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 

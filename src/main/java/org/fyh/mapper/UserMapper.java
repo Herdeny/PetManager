@@ -12,6 +12,8 @@ public interface UserMapper {
     public User findByUserName(String username);
 
     //添加用户
-    @Insert("insert into user(username,password,createTime,updateTime) values(#{username},#{password},now(),now())")
+    @Insert("insert into user(username,password,create_time,update_time) values(#{username},#{password},now(),now())")
     public void add(String username, String password);
+
+    void update(User user);
 }

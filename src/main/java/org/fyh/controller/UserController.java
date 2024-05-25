@@ -6,6 +6,7 @@ import org.fyh.pojo.User;
 import org.fyh.service.UserService;
 import org.fyh.utils.Md5Util;
 import org.fyh.utils.JwtUtil;
+import org.fyh.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -59,13 +60,21 @@ public class UserController {
             }
         }
     }
+
     //获取用户信息
     @GetMapping("/userInfo")
-    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
-        Map<String, Object> map = JwtUtil.parseToken(token);
-        Object username = map.get("username");
-        User user = userService.findByUserName(username.toString());
+    public Result<User> userInfo() {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        String username = (String) claims.get("username");
+        User user = userService.findByUserName(username);
         return Result.success(user);
     }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody User user) {
+        userService.update(user);
+        return Result.success();
+    }
+
 
 }

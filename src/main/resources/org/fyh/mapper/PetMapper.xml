@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyh.mapper.PetMapper">
+    <select id="list" resultType="org.fyh.pojo.Pet">
+        select * from pet
+        <where>
+            <if test="gender!=null">
+                category=#{category}
+            </if>
+            <if test="isOwned!=null">
+                and is_owned=#{isOwned}
+            </if>
+        </where>
+    </select>
+</mapper>
