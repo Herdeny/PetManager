@@ -32,4 +32,23 @@ public class PetServiceImpl implements PetService {
         pageBean.setItems(page.getResult());
         return pageBean;
     }
+
+    @Override
+    public Pet get(Integer id) { return petMapper.get(id);
+    }
+
+    @Override
+    public void updatePet(Pet pet) {
+        petMapper.updatePet(pet);
+    }
+
+    @Override
+    public void deletePet(Integer id) {
+        petMapper.deletePet(id);
+    }
+
+    @Override
+    public void deletePetByUser(Integer id) {
+        petMapper.deletePetByUser(id);
+    }
 }

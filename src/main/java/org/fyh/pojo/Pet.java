@@ -13,9 +13,8 @@ public class Pet {
     private Integer gender;
     private LocalDate birth;
     private Integer weight;
-    private Integer breed_times;
-    private boolean is_owned;
-    private Integer owner_id;
+    private boolean owned;
+    private Integer ownerId;
     private Integer category;
-    private boolean is_sterilized;
+    private boolean sterilized;
 }

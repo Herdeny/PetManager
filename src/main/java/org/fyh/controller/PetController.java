@@ -24,17 +24,42 @@ public class PetController {
         petService.addPet(pet);
         return Result.success();
     }
+    @PostMapping("/update")
+    public Result updatePet(@RequestBody Pet pet) {
+        if (!pet.isOwned()){
+        System.out.println(pet.getOwnerId());
+        }
+
+        petService.updatePet(pet);
+        return Result.success();
+    }
+    @DeleteMapping
+    public Result deletePet(Integer id) {
+        petService.deletePet(id);
+        return Result.success();
+    }
+
+    @DeleteMapping("/deletebyuser")
+    public Result deletePetByUser(@RequestParam(value = "id")Integer id) {
+        petService.deletePetByUser(id);
+        return Result.success();
+    }
 
     @GetMapping
     public Result<PageBean<Pet>> list(
             Integer pageNum,
             Integer pageSize,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) Boolean isOwned
+            @RequestParam(required = false) Boolean owned
     ) {
-        PageBean<Pet> pageBean = petService.list(pageNum, pageSize, category, isOwned);
+        PageBean<Pet> pageBean = petService.list(pageNum, pageSize, category, owned);
         return Result.success(pageBean);
     }
+
+    @GetMapping("/check")
+    public Result<Pet> get(Integer id) {
+        Pet pet = petService.get(id);
+        return Result.success(pet);
+    }
+
 }
-
-

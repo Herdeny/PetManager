@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyh.mapper.PetCategoryChildMapper">
+    <select id="list" resultType="org.fyh.pojo.PetCategoryChild">
+        select * from pet_category_child
+        <where>
+            <if test="categoryFather!=null">
+                category_father=#{categoryFather}
+            </if>
+        </where>
+    </select>
+    <insert id="add">
+        INSERT INTO pet_category_child
+        (category_name,category_father
+        <if test="categoryNameEn != null">,category_name_en</if>
+        <if test="categoryAlias != null">,category_alias</if>
+        <if test="categoryDescription != null">,category_description</if>)
+        VALUES
+        (#{categoryName}, #{categoryFather}
+        <if test="categoryNameEn != null">,#{categoryNameEn}</if>
+        <if test="categoryAlias != null">,#{categoryAlias}</if>
+        <if test="categoryDescription != null">,#{categoryDescription}</if>)
+
+    </insert>
+    <update id="update">
+        UPDATE pet_category_child
+        SET
+        category_name = #{categoryName},
+        category_father = #{categoryFather}
+        <if test="categoryNameEn != null">
+            ,category_name_en = #{categoryNameEn}
+        </if>
+        <if test="categoryAlias != null">
+            ,category_alias = #{categoryAlias}
+        </if>
+        <if test="categoryDescription != null">
+            , category_description = #{categoryDescription}
+        </if>
+        WHERE id = #{id} <!-- 假设id是主键，用于确定要更新的记录 -->
+    </update>
+</mapper>

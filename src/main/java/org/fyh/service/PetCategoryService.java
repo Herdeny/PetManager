@@ -6,4 +6,12 @@ import java.util.List;
 
 public interface PetCategoryService {
     List<PetCategory> list();
+
+    PetCategory get(Integer id);
+
+    void addPetCategory(PetCategory petCategory);
+
+    void updatePetCategory(PetCategory petCategory);
+
+    void deletePetCategory(Integer id);
 }

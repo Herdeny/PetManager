@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyh.mapper.PetCategoryMapper">
+    <insert id="addPetCategory">
+        INSERT INTO pet_category
+        (category_name
+        <if test="categoryAlias != null">,category_alias</if>
+        <if test="description != null">,description</if>
+        )
+        VALUES
+        (#{categoryName}
+        <if test="categoryAlias != null">,#{categoryAlias}</if>
+        <if test="description != null">,#{description}</if>
+        )
+    </insert>
+    <update id="updatePetCategory">
+        UPDATE pet_category
+        SET
+        category_name = #{categoryName}
+        <if test="categoryAlias != null">
+            ,category_alias = #{categoryAlias}
+        </if>
+        <if test="description != null">
+            ,description = #{description}
+        </if>
+        WHERE id = #{id} <!-- 假设id是主键，用于确定要更新的记录 -->
+    </update>
+</mapper>

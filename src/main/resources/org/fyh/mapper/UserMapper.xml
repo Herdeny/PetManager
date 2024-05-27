@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyh.mapper.UserMapper">
+<update id="update">
+    UPDATE user
+    SET
+    username = #{username}
+    <if test="password != null">
+        ,password = #{password}
+    </if>
+    <if test="nickname != null">
+        ,nickname = #{nickname}
+    </if>
+    <if test="email != null">
+        , email = #{email}
+    </if>
+    <if test="avatarUrl != null">
+        , avatarUrl = #{avatarUrl}
+    </if>
+    <if test="updateTime != null">
+        , update_time = #{updateTime}
+    </if>
+    WHERE id = #{id} <!-- 假设id是主键，用于确定要更新的记录 -->
+</update>
+</mapper>

@@ -17,4 +17,24 @@ public class PetCategoryServiceImpl implements PetCategoryService {
     public List<PetCategory> list() {
         return petCategoryMapper.list();
     }
+
+    @Override
+    public PetCategory get(Integer id) {
+        return petCategoryMapper.get(id);
+    }
+
+    @Override
+    public void addPetCategory(PetCategory petCategory) {
+        petCategoryMapper.addPetCategory(petCategory);
+    }
+
+    @Override
+    public void updatePetCategory(PetCategory petCategory) {
+        petCategoryMapper.updatePetCategory(petCategory);
+    }
+
+    @Override
+    public void deletePetCategory(Integer id) {
+        petCategoryMapper.deletePetCategory(id);
+    }
 }

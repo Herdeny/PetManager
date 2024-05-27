@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fyh.mapper.ShopMapper">
+    <select id="list" resultType="org.fyh.pojo.Shop">
+        select * from shop
+        <where>
+            <if test="goodsStatus!=null">
+                goods_status=#{goodsStatus}
+            </if>
+        </where>
+    </select>
+    <insert id="add">
+        INSERT INTO shop
+        (goods_name,goods_img
+        <if test="goodsPrice != null">,goods_price</if>
+        <if test="goodsAmount != null">,goods_amount</if>
+        <if test="goodsDesc != null">,goods_desc</if>)
+        VALUES
+        (#{goodsName}, #{goodsImg}
+        <if test="goodsPrice != null">,#{goodsPrice}</if>
+        <if test="goodsAmount != null">,#{goodsAmount}</if>
+        <if test="goodsDesc != null">,#{goodsDesc}</if>)
+    </insert>
+    <update id="update">
+        UPDATE shop
+        SET
+        goods_name = #{goodsName},
+        goods_img = #{goodsImg}
+        <if test="goodsPrice != null">
+            ,goods_price = #{goodsPrice}
+        </if>
+
+        <if test="goodsAmount != null">
+            ,goods_amount = #{goodsAmount}
+        </if>
+        <if test="goodsDesc != null">
+            , goods_desc = #{goodsDesc}
+        </if>
+        <if test="goodsSold != null">
+            , goods_sold = #{goodsSold}
+        </if>
+        <if test="goodsStatus != null">
+            ,goods_status = #{goodsStatus}
+        </if>
+        WHERE goods_id = #{goodsId} <!-- 假设id是主键，用于确定要更新的记录 -->
+    </update>
+</mapper>

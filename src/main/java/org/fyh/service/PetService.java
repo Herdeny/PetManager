@@ -11,4 +11,12 @@ public interface PetService {
 
     //条件分页列表查询
     PageBean<Pet> list(Integer pageNum, Integer pageSize, String category, Boolean isOwned);
+
+    Pet get(Integer id);
+
+    void updatePet(Pet pet);
+
+    void deletePet(Integer id);
+
+    void deletePetByUser(Integer id);
 }

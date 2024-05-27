@@ -1,6 +1,6 @@
 package org.fyh.mapper;
 
-import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.fyh.pojo.Pet;
@@ -9,10 +9,18 @@ import java.util.List;
 
 @Mapper
 public interface PetMapper {
-    @Insert("insert into pet(name,gender,birth,weight,weight,breed_times,category,is_owned,owner_id,is_sterilizated) values(#{name},#{gender},#{birth},#{weight},#{weight},#{breedTimes},#{category},#{isOwned},#{ownerId},#{isSterilizated})")
+
     void addPet(Pet pet);
 
 
-    List<Pet> list(String category, Boolean isOwned);
+    List<Pet> list(String category, Boolean owned);
+    @Select("select * from pet where id = #{id}")
+    Pet get(Integer id);
 
+    void updatePet(Pet pet);
+
+    @Delete("delete from pet where id = #{id}")
+    void deletePet(Integer id);
+    @Delete("delete from pet where owner_id = #{id}")
+    void deletePetByUser(Integer id);
 }

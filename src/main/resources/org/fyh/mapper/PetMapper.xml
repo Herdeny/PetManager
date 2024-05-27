@@ -6,12 +6,46 @@
     <select id="list" resultType="org.fyh.pojo.Pet">
         select * from pet
         <where>
-            <if test="gender!=null">
+            <if test="category!=null">
                 category=#{category}
             </if>
-            <if test="isOwned!=null">
-                and is_owned=#{isOwned}
+            <if test="owned!=null">
+                and owned=#{owned}
             </if>
         </where>
     </select>
+    <insert id="addPet">
+        INSERT INTO pet
+        (name, gender, birth, category, owned
+        <if test="weight != null">,weight</if>
+        <if test="ownerId != null">,owner_id</if>
+        <if test="sterilized != null">,sterilized</if>)
+        VALUES
+        (#{name}, #{gender}, #{birth}, #{category}, #{owned}
+        <if test="weight != null">,#{weight}</if>
+        <if test="ownerId != null">,#{ownerId}</if>
+        <if test="sterilized != null">,#{sterilized}</if>)
+
+    </insert>
+    <update id="updatePet">
+        UPDATE pet
+        SET
+        name = #{name},
+        gender = #{gender}
+        <if test="birth != null">
+            ,birth = #{birth}
+        </if>
+            ,category = #{category}
+        <if test="owned != null">
+            ,owned = #{owned}
+        </if>
+        <if test="weight != null">
+            , weight = #{weight}
+        </if>
+            , owner_id = #{ownerId}
+        <if test="sterilized != null">
+            , sterilized = #{sterilized}
+        </if>
+        WHERE id = #{id} <!-- 假设id是主键，用于确定要更新的记录 -->
+    </update>
 </mapper>
