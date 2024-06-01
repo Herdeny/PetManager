@@ -35,18 +35,31 @@ public class UserController {
             //未占用，返回为空
             userService.register(username, password); //注册
             return Result.success(); //返回结果
-        } else return Result.error("username is exist");
+        } else return Result.error(204);
+    }
+
+    //恢复
+    @PostMapping("/recovery")
+    public Result recovery(@Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$") String username, @Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$") String password, @Pattern(regexp = "^([A-Za-z0-9_\\-.])+@([A-Za-z0-9_\\-.])+\\.([A-Za-z]{2,4})$") String mail) {
+        //查询用户
+        User u = userService.findByUserName(username);
+        if (u != null) {
+            if (u.getEmail().equals(mail)) {
+                u.setPassword(Md5Util.getMD5String(password));
+                userService.update(u); //注册
+                return Result.success(); //返回结果
+            } else return Result.error(201);
+        } else return Result.error(202);
     }
 
     //登录
     @PostMapping("/login")
     public Result login(@Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$") String username, @Pattern(regexp = "^[a-zA-Z0-9_]{5,16}$") String password) {
-        System.out.println(username);
         //查询用户
         User u = userService.findByUserName(username);
         if (u == null) {
             //未占用，返回为空
-            return Result.error("用户不存在");
+            return Result.error(202);
         } else {
             //已占用，返回用户
             if (u.getPassword().equals(Md5Util.getMD5String(password))) {
@@ -59,7 +72,7 @@ public class UserController {
                 return Result.success(jwtToken);
             } else {
                 //密码错误
-                return Result.error("密码错误");
+                return Result.error(203);
             }
         }
     }

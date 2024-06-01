@@ -22,4 +22,6 @@ public class User {
     private LocalDateTime createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
+    @NotNull
+    private boolean admin;
 }
