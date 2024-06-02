@@ -12,8 +12,8 @@ public interface PetMapper {
 
     void addPet(Pet pet);
 
+    List<Pet> list(String category, Boolean owned, Integer ownerId);
 
-    List<Pet> list(String category, Boolean owned);
     @Select("select * from pet where id = #{id}")
     Pet get(Integer id);
 

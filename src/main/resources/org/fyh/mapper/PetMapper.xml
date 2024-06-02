@@ -12,20 +12,24 @@
             <if test="owned!=null">
                 and owned=#{owned}
             </if>
+            <if test="ownerId!=null">
+                and owner_id=#{ownerId}
+        </if>
         </where>
     </select>
     <insert id="addPet">
         INSERT INTO pet
-        (name, gender, birth, category, owned
+        (name, gender, category, owned
         <if test="weight != null">,weight</if>
         <if test="ownerId != null">,owner_id</if>
-        <if test="sterilized != null">,sterilized</if>)
+        <if test="sterilized != null">,sterilized</if>
+        <if test="birth != null">,birth</if>)
         VALUES
-        (#{name}, #{gender}, #{birth}, #{category}, #{owned}
+        (#{name}, #{gender}, #{category}, #{owned}
         <if test="weight != null">,#{weight}</if>
         <if test="ownerId != null">,#{ownerId}</if>
-        <if test="sterilized != null">,#{sterilized}</if>)
-
+        <if test="sterilized != null">,#{sterilized}</if>
+        <if test="birth != null">,#{birth}</if>)
     </insert>
     <update id="updatePet">
         UPDATE pet
