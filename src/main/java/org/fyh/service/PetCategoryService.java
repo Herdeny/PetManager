@@ -14,4 +14,6 @@ public interface PetCategoryService {
     void updatePetCategory(PetCategory petCategory);
 
     void deletePetCategory(Integer id);
+
+    String getName(Integer id);
 }

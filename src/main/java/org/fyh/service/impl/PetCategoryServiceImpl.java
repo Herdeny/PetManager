@@ -37,4 +37,9 @@ public class PetCategoryServiceImpl implements PetCategoryService {
     public void deletePetCategory(Integer id) {
         petCategoryMapper.deletePetCategory(id);
     }
+
+    @Override
+    public String getName(Integer id) {
+        return petCategoryMapper.getName(id);
+    }
 }
