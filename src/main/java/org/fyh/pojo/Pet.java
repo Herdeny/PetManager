@@ -1,9 +1,10 @@
 package org.fyh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class Pet {
@@ -11,7 +12,8 @@ public class Pet {
     @NotEmpty
     private String name;
     private Integer gender;
-    private LocalDate birth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date birth;
     private Integer weight;
     private boolean owned;
     private Integer ownerId;
