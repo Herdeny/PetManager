@@ -23,10 +23,10 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public PageBean<Pet> list(Integer pageNum, Integer pageSize, String category, Boolean isOwned) {
+    public PageBean<Pet> list(Integer pageNum, Integer pageSize, String category, Boolean isOwned, Integer ownerId) {
         PageBean<Pet> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
-        List<Pet> petList = petMapper.list(category, isOwned);
+        List<Pet> petList = petMapper.list(category, isOwned, ownerId);
         Page<Pet> page = (Page<Pet>) petList;
         pageBean.setTotal(page.getTotal());
         pageBean.setItems(page.getResult());
@@ -34,7 +34,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet get(Integer id) { return petMapper.get(id);
+    public Pet get(Integer id) {
+        return petMapper.get(id);
     }
 
     @Override
