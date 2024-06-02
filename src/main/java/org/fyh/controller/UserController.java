@@ -68,6 +68,7 @@ public class UserController {
                 Map<String, Object> claims = new HashMap<>();
                 claims.put("id", u.getId());
                 claims.put("username", u.getUsername());
+                claims.put("admin", u.isAdmin());
                 String jwtToken = JwtUtil.genToken(claims);
                 return Result.success(jwtToken);
             } else {
@@ -110,7 +111,11 @@ public class UserController {
         User user = userService.findByUserId(id);
         return Result.success(user);
     }
-
+    @GetMapping("/userbyname")
+    public Result<User> findByUsername(String username) {
+        User user = userService.findByUserName(username);
+        return Result.success(user);
+    }
     @GetMapping("/allPage")
     public Result<PageBean<User>> list(
             Integer pageNum,

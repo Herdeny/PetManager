@@ -22,6 +22,9 @@
     <if test="updateTime != null">
         , update_time = #{updateTime}
     </if>
+    <if test="admin != null">
+        , admin = #{admin}
+    </if>
     WHERE id = #{id} <!-- 假设id是主键，用于确定要更新的记录 -->
 </update>
 </mapper>
