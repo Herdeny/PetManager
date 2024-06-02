@@ -1,6 +1,5 @@
 package org.fyh.controller;
 
-import org.fyh.pojo.Pet;
 import org.fyh.pojo.PetCategory;
 import org.fyh.pojo.Result;
 import org.fyh.service.PetCategoryService;
@@ -40,5 +39,9 @@ public class PetCategoryController {
     public Result deletePetCategory(Integer id) {
         petcategoryService.deletePetCategory(id);
         return Result.success();
+    }
+    @GetMapping("/name")
+    public Result getName(@RequestParam Integer id){
+        return Result.success(petcategoryService.getName(id));
     }
 }
