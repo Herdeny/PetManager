@@ -9,6 +9,15 @@
             <if test="goodsStatus!=null">
                 goods_status=#{goodsStatus}
             </if>
+            <if test="minValue!=null">
+                and goods_price &gt;= #{minValue}
+            </if>
+            <if test="maxValue!=null">
+                and goods_price  &lt;= #{maxValue}
+            </if>
+        <if test="onlyOnShelves">
+            and goods_amount > 0
+        </if>
         </where>
     </select>
     <insert id="add">

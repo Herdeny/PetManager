@@ -2,7 +2,6 @@ package org.fyh.controller;
 
 import jakarta.validation.constraints.Pattern;
 import org.fyh.pojo.PageBean;
-import org.fyh.pojo.Pet;
 import org.fyh.pojo.Result;
 import org.fyh.pojo.User;
 import org.fyh.service.UserService;

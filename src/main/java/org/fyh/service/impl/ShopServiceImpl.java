@@ -7,6 +7,8 @@ import org.fyh.pojo.PageBean;
 import org.fyh.pojo.Pet;
 import org.fyh.pojo.Shop;
 import org.fyh.service.ShopService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,26 @@ import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+
     @Autowired
     private ShopMapper shopMapper;
 
     @Override
-    public PageBean<Shop> list(Integer pageNum, Integer pageSize, Boolean goodsStatus) {
+    public PageBean<Shop> list(Integer pageNum, Integer pageSize, Boolean goodsStatus, Integer minValue, Integer maxValue, boolean onlyOnShelves) {
         PageBean<Shop> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
-        List<Shop> petList = shopMapper.list(goodsStatus);
+        List<Shop> petList = shopMapper.list(goodsStatus, minValue, maxValue, onlyOnShelves);
+        Page<Shop> page = (Page<Shop>) petList;
+        pageBean.setTotal(page.getTotal());
+        pageBean.setItems(page.getResult());
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<Shop> hotList(Integer pageNum, Integer pageSize) {
+        PageBean<Shop> pageBean = new PageBean<>();
+        PageHelper.startPage(pageNum, pageSize);
+        List<Shop> petList = shopMapper.hotList();
         Page<Shop> page = (Page<Shop>) petList;
         pageBean.setTotal(page.getTotal());
         pageBean.setItems(page.getResult());
@@ -42,4 +56,16 @@ public class ShopServiceImpl implements ShopService {
     public void delete(Shop shop) {
         shopMapper.delete(shop);
     }
+
+    @Override
+    public void buy(int goodsId, int amount) {
+        shopMapper.buy(goodsId, amount);
+        shopMapper.updateSold(goodsId, amount);
+    }
+
+    @Override
+    public Shop get(int goodsId) {
+        return shopMapper.get(goodsId);
+    }
+
 }
