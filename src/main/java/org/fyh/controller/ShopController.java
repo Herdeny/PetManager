@@ -1,5 +1,6 @@
 package org.fyh.controller;
 
+import lombok.Data;
 import org.fyh.pojo.PageBean;
 import org.fyh.pojo.Result;
 import org.fyh.pojo.Shop;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -34,8 +37,13 @@ public class ShopController {
             @RequestParam(required = false) Integer maxValue,
             @RequestParam(required = false) boolean onlyOnShelves
     ) {
-        PageBean<Shop> pageBean = ShopService.list(pageNum, pageSize, goodsStatus,minValue,maxValue,onlyOnShelves);
+        PageBean<Shop> pageBean = ShopService.list(pageNum, pageSize, goodsStatus, minValue, maxValue, onlyOnShelves);
         return Result.success(pageBean);
+    }
+
+    @GetMapping("/list/all")
+    public List<Shop> list() {
+        return ShopService.listArray();
     }
 
     @GetMapping("/onShelves")
@@ -48,6 +56,7 @@ public class ShopController {
     ) {
         return list(pageNum, pageSize, true, minValue, maxValue, onlyOnShelves);
     }
+
     @GetMapping("/hotList")
     public Result<PageBean<Shop>> hotList(
             Integer pageNum,
@@ -56,7 +65,11 @@ public class ShopController {
         PageBean<Shop> pageBean = ShopService.hotList(pageNum, pageSize);
         return Result.success(pageBean);
     }
-
+@GetMapping("/hotList/list")
+    public List<Shop> hotList() {
+        return ShopService.hotListArray();
+    }
+    @GetMapping("/get")
     public Shop get(int goodsId) {
         return ShopService.get(goodsId);
     }
@@ -80,8 +93,12 @@ public class ShopController {
     }
 
     @PostMapping("/buy")
-    public Result buy(@RequestParam(value = "goodsId") Integer goodsId, @RequestParam(value = "amount") Integer amount) {
-
+    public Result buy(
+            @RequestParam(value = "goodsId") Integer goodsId,
+            @RequestParam(value = "amount") Integer amount,
+            @RequestParam(required = false) Date date,
+            @RequestParam(value = "orderValue") Integer orderValue)
+    {
         Shop shop = get(goodsId);
         if (shop == null) {
             return Result.error(205, "商品不存在");
@@ -93,9 +110,41 @@ public class ShopController {
             ShopService.buy(goodsId, amount);
             Map<String, Object> claims = ThreadLocalUtil.get();
             int userId = (int) claims.get("id");
-            orderService.add(userId, goodsId, amount);
-            goodsSoldService.add(goodsId, amount);
+            orderService.add(userId, goodsId, amount, orderValue);
+            goodsSoldService.add(goodsId, amount, date);
             return Result.success();
         }
+    }
+
+    @PostMapping("/star")
+    public Result star(@RequestParam(value = "goodsId") Integer goodsId) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        int userId = (int) claims.get("id");
+        ShopService.star(userId, goodsId);
+        return Result.success();
+    }
+
+    @PostMapping("/unStar")
+    public Result unstar(@RequestParam(value = "goodsId") Integer goodsId) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        int userId = (int) claims.get("id");
+        ShopService.unstar(userId, goodsId);
+        return Result.success();
+    }
+
+    @GetMapping("/starList")
+    public Result<List<Shop>> starList() {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        int userId = (int) claims.get("id");
+        List<Shop> petList = ShopService.starList(userId);
+        return Result.success(petList);
+    }
+
+    @GetMapping("/isStar")
+    public Result<Boolean> isStar(@RequestParam(value = "goodsId") Integer goodsId) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        int userId = (int) claims.get("id");
+        boolean isStar = ShopService.isStar(userId, goodsId);
+        return Result.success(isStar);
     }
 }

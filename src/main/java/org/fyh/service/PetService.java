@@ -19,4 +19,10 @@ public interface PetService {
     void deletePet(Integer id);
 
     void deletePetByUser(Integer id);
+
+    Integer getAdopted(Integer id);
+
+    List<Pet> getUnAdopted();
+
+    Integer count();
 }

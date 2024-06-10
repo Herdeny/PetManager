@@ -21,18 +21,35 @@ public class SoldValueServiceImpl implements SoldValueService {
     }
 
 
-
-
+    @Override
+    public void add(int userId, int value, Date date) {
+        if (date != null) {
+            SoldValue soldValue = soldValueMapper.get(userId, new java.sql.Date(date.getTime()));
+            if (soldValue != null) {
+                soldValueMapper.update(userId, soldValue.getValue() + value, new java.sql.Date(date.getTime()));
+            } else soldValueMapper.add(userId, value);
+        } else {
+            //创造一个 年-月-日的日期
+            LocalDate currentDate = LocalDate.now();
+            SoldValue soldValue = soldValueMapper.get(userId, java.sql.Date.valueOf(currentDate));
+            if (soldValue != null) {
+                soldValueMapper.update(userId, soldValue.getValue() + value, java.sql.Date.valueOf(currentDate));
+            } else soldValueMapper.add(userId, value);
+        }
+    }
 
     @Override
-    public void add(int userId, int value) {
-        //创造一个 年-月-日的日期
-        LocalDate currentDate = LocalDate.now();
-        SoldValue soldValue = soldValueMapper.get(userId, java.sql.Date.valueOf(currentDate));
-        if (soldValue != null) {
-            soldValueMapper.update(userId, soldValue.getValue() + value , java.sql.Date.valueOf(currentDate));
-        }else soldValueMapper.add(userId, value);
+    public Integer value(int userId) {
+        return soldValueMapper.value(userId);
+    }
 
+    @Override
+    public Integer valueAll() {
+        return soldValueMapper.valueAll();
+    }
 
+    @Override
+    public Integer getDay(Date date) {
+        return soldValueMapper.getDay(new java.sql.Date(date.getTime()));
     }
 }

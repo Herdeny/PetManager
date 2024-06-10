@@ -7,5 +7,5 @@ import java.util.Date;
 public interface GoodsSoldService {
     GoodsSold get(int goodsId, Date date);
 
-    void add(int goodsId, int amount);
+    void add(int goodsId, int amount, Date date);
 }

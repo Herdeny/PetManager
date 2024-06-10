@@ -4,8 +4,12 @@ import org.fyh.pojo.PageBean;
 import org.fyh.pojo.Pet;
 import org.fyh.pojo.Result;
 import org.fyh.service.PetService;
+import org.fyh.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pet")
@@ -56,6 +60,22 @@ public class PetController {
     public Result<Pet> get(Integer id) {
         Pet pet = petService.get(id);
         return Result.success(pet);
+    }
+
+    @GetMapping("/adopted")
+    public Result<Integer> getAdopted() {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        int userId = (int) claims.get("id");
+        return Result.success(petService.getAdopted(userId));
+    }
+
+    @GetMapping("/unAdopted")
+    public Result<List<Pet>> getUnAdopted() {
+        return Result.success(petService.getUnAdopted());
+    }
+    @GetMapping("/count")
+    public Result<Integer> count() {
+        return Result.success(petService.count());
     }
 
 }

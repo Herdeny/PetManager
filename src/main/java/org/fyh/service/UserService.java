@@ -1,7 +1,6 @@
 package org.fyh.service;
 
 import org.fyh.pojo.PageBean;
-import org.fyh.pojo.Pet;
 import org.fyh.pojo.User;
 
 import java.util.List;

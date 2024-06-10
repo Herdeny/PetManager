@@ -23,4 +23,13 @@ public interface PetMapper {
     void deletePet(Integer id);
     @Delete("delete from pet where owner_id = #{id}")
     void deletePetByUser(Integer id);
+
+    @Select("select count(*) from pet where owner_id = #{id}")
+    Integer getAdopted(Integer id);
+
+    @Select("select * from pet where owned = false")
+    List<Pet> getUnAdopted();
+
+    @Select("select count(*) from pet")
+    Integer count();
 }

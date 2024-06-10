@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.fyh.mapper.UserMapper;
 import org.fyh.pojo.PageBean;
-import org.fyh.pojo.Pet;
 import org.fyh.pojo.User;
 import org.fyh.service.UserService;
 import org.fyh.utils.Md5Util;

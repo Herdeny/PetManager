@@ -24,8 +24,8 @@ public class ShopServiceImpl implements ShopService {
     public PageBean<Shop> list(Integer pageNum, Integer pageSize, Boolean goodsStatus, Integer minValue, Integer maxValue, boolean onlyOnShelves) {
         PageBean<Shop> pageBean = new PageBean<>();
         PageHelper.startPage(pageNum, pageSize);
-        List<Shop> petList = shopMapper.list(goodsStatus, minValue, maxValue, onlyOnShelves);
-        Page<Shop> page = (Page<Shop>) petList;
+        List<Shop> shopList = shopMapper.list(goodsStatus, minValue, maxValue, onlyOnShelves);
+        Page<Shop> page = (Page<Shop>) shopList;
         pageBean.setTotal(page.getTotal());
         pageBean.setItems(page.getResult());
         return pageBean;
@@ -66,6 +66,36 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop get(int goodsId) {
         return shopMapper.get(goodsId);
+    }
+
+    @Override
+    public void star(int userId, Integer goodsId) {
+        shopMapper.star(userId, goodsId);
+    }
+
+    @Override
+    public void unstar(int userId, Integer goodsId) {
+        shopMapper.unstar(userId, goodsId);
+    }
+
+    @Override
+    public List<Shop> starList(int userId) {
+        return shopMapper.starList(userId);
+    }
+
+    @Override
+    public boolean isStar(int userId, Integer goodsId) {
+        return shopMapper.isStar(userId, goodsId) > 0;
+    }
+
+    @Override
+    public List<Shop> hotListArray() {
+        return shopMapper.hotList();
+    }
+
+    @Override
+    public List<Shop> listArray() {
+        return shopMapper.listArray();
     }
 
 }

@@ -20,13 +20,19 @@ public class GoodsSoldServiceImpl implements GoodsSoldService {
     }
 
     @Override
-    public void add(int goodsId, int amount) {
-        //创造一个 年-月-日的日期
-        LocalDate currentDate = LocalDate.now();
-        GoodsSold goodsSold = goodsSoldMapper.get(goodsId, java.sql.Date.valueOf(currentDate));
-        if (goodsSold != null) {
-            goodsSoldMapper.update(goodsId, goodsSold.getSoldAmount() + amount, java.sql.Date.valueOf(currentDate));
-        }else goodsSoldMapper.add(goodsId, amount);
-
+    public void add(int goodsId, int amount, Date date) {
+        GoodsSold goodsSold;
+        if (date == null) {
+            //创造一个 年-月-日的日期
+            LocalDate currentDate = LocalDate.now();
+            goodsSold = goodsSoldMapper.get(goodsId, java.sql.Date.valueOf(currentDate));
+            if (goodsSold != null) {
+                goodsSoldMapper.update(goodsId, goodsSold.getSoldAmount() + amount, java.sql.Date.valueOf(currentDate));
+            } else goodsSoldMapper.add(goodsId, amount);
+        } else {
+            goodsSold = goodsSoldMapper.get(goodsId, new java.sql.Date(date.getTime()));
+            goodsSoldMapper.update(goodsId, goodsSold.getSoldAmount() + amount, new java.sql.Date(date.getTime()));
+        }
     }
+
 }

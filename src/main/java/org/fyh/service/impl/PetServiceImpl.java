@@ -52,4 +52,19 @@ public class PetServiceImpl implements PetService {
     public void deletePetByUser(Integer id) {
         petMapper.deletePetByUser(id);
     }
+
+    @Override
+    public Integer getAdopted(Integer id) {
+        return petMapper.getAdopted(id);
+    }
+
+    @Override
+    public List<Pet> getUnAdopted() {
+        return petMapper.getUnAdopted();
+    }
+
+    @Override
+    public Integer count() {
+        return petMapper.count();
+    }
 }

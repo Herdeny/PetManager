@@ -17,6 +17,17 @@
             </if>
         </where>
     </select>
+    <select id="getOrderAll"  resultType="org.fyh.pojo.Order">
+        select * from `order`
+        <where>
+            <if test="orderStatus!=null">
+                and order_status=#{orderStatus}
+            </if>
+            <if test="goodsName!=null">
+                and goods_name LIKE #{goodsName}
+            </if>
+        </where>
+    </select>
     <select id="getOrderOn"  resultType="org.fyh.pojo.Order">
         select * from `order`
         <where>
